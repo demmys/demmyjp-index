@@ -3,28 +3,38 @@ $(function(){
     $shell.typist({
         height: $shell.height(),
         width: $shell.width(),
-        backgroundColor: '#ecf0f1',
-        textColor: '#27ae60',
+        backgroundColor: '#fff',
+        textColor: '#444',
         fontFamily: '"Droid Sans Mono", sans-serif;'
     });
 
-    var code = demmy.code.C;
+    var code = demmy.code.c;
 
     $shell.typist('prompt')
           .typist('wait', 500)
-          .typist('type', 'vim ' + code.file)
-          .typist('wait', 1000);
+          .typist('type', 'ed -p @')
+          .typist('wait', 1000)
+          .typist('prompt', '@')
+          .typist('wait', 500)
+          .typist('type', 'i')
+          .typist('wait', 500)
     for(var i = 0; i < code.source.length; i++){
         $shell.typist('echo', code.source[i]);
     }
-    $shell.typist('wait', 1000)
+    $shell.typist('echo', '.')
+          .typist('prompt', '@')
+          .typist('wait', 500)
+          .typist('type', 'wq ' + code.file)
+          .typist('echo', String(demmy.code.length(code.source)))
           .typist('prompt')
           .typist('wait', 500)
           .typist('type', code.compile)
+          .typist('wait', 500)
           .typist('prompt')
           .typist('wait', 500)
           .typist('type', code.run)
-          .typist('show', code.result);
+          .typist('show', code.result)
+          .typist('prompt');
 });
 
 (function(window, library, namespace, undefined){
@@ -40,23 +50,24 @@ $(function(){
         lib[namespace] = ns;
     }
 
-    var es = function(text){
-        for(var i = 0; i < text.length; i++){
-            if(text[i] == ' '){
-                text[i] = '&nbsp;';
+    ns.length = function(source){
+        var len = source.length;
+        for(var i = 0; i < source.length; i++){
+            if(source[i] != ' '){
+                len += source[i].length;
             }
         }
-        return text;
+        return len;
     };
 
-    ns.C = {
+    ns.c = {
         file: 'hello.c',
         source: [
             '#include <stdio.h>',
             ' ',
             'int main(int argc, char *argv[]){',
-            es('    puts("Hello, World!");'),
-            es('    return 0;'),
+            '    puts("Hello, World!");',
+            '    return 0;',
             '}'
         ],
         compile: 'gcc -o hello hello.c',
