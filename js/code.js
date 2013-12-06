@@ -6,35 +6,14 @@ $(function(){
         backgroundColor: '#fff',
         textColor: '#444',
         fontFamily: '"Droid Sans Mono", sans-serif;'
-    });
+    }).typist('prompt');
 
-    var code = demmy.code.c;
-
-    $shell.typist('prompt')
-          .typist('wait', 500)
-          .typist('type', 'ed -p @')
-          .typist('wait', 1000)
-          .typist('prompt', '@')
-          .typist('wait', 500)
-          .typist('type', 'i')
-          .typist('wait', 500)
-    for(var i = 0; i < code.source.length; i++){
-        $shell.typist('echo', code.source[i]);
-    }
-    $shell.typist('echo', '.')
-          .typist('prompt', '@')
-          .typist('wait', 500)
-          .typist('type', 'wq ' + code.file)
-          .typist('echo', String(demmy.code.length(code.source)))
-          .typist('prompt')
-          .typist('wait', 500)
-          .typist('type', code.compile)
-          .typist('wait', 500)
-          .typist('prompt')
-          .typist('wait', 500)
-          .typist('type', code.run)
-          .typist('show', code.result)
-          .typist('prompt');
+    demmy.code.run($shell, demmy.code.c);
+    window.setInterval(function(){
+        if($shell.queue().length == 0){
+            demmy.code.run($shell, demmy.code.c);
+        }
+    }, 2000);
 });
 
 (function(window, library, namespace, undefined){
@@ -73,6 +52,33 @@ $(function(){
         compile: 'gcc -o hello hello.c',
         run: './hello',
         result: 'Hello, World!'
+    };
+
+    ns.run = function($shell, code){
+        $shell.typist('wait', 500)
+              .typist('type', 'ed -p @')
+              .typist('wait', 1000)
+              .typist('prompt', '@')
+              .typist('wait', 500)
+              .typist('type', 'i')
+              .typist('wait', 500);
+        for(var i = 0; i < code.source.length; i++){
+            $shell.typist('echo', code.source[i]);
+        }
+        $shell.typist('echo', '.')
+              .typist('prompt', '@')
+              .typist('wait', 500)
+              .typist('type', 'wq ' + code.file)
+              .typist('echo', String(ns.length(code.source)))
+              .typist('prompt')
+              .typist('wait', 500)
+              .typist('type', code.compile)
+              .typist('wait', 500)
+              .typist('prompt')
+              .typist('wait', 500)
+              .typist('type', code.run)
+              .typist('show', code.result)
+              .typist('prompt');
     };
 
 }(this, 'demmy', 'code'));
