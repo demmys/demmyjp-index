@@ -1,10 +1,25 @@
 $(function(){
+    /*
+     * Toggler
+     */
+    $(".circle-toggler").click(function(e){
+        $target = $(e.target);
+        $target.toggleClass("active");
+        $target.parent().parent().children("ul.togglee-list").toggleClass("active");
+    });
+
+    /*
+     * Header
+     */
     $("header>h1").shellView()
                   .delay(500)
                   .type("demmy.jp", 200)
                   .delay(5000)
                   .stopBlink(false);
 
+    /*
+     * Hakoniwa
+     */
     var $hakoniwa = $("#hakoniwa");
     $hakoniwa.shellView();
     demmy.code.random($hakoniwa);
