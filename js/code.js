@@ -2,6 +2,7 @@ $(function(){
     var $hakoniwa = $("#hakoniwa");
     window.controller = $hakoniwa.initShellView();
 
+    /*
     var $legacy = $('#legacy');
     $legacy.typist({
         height: $legacy.height(),
@@ -12,6 +13,7 @@ $(function(){
     }).typist('prompt');
 
     demmy.code.random($legacy);
+    */
 });
 
 (function(window, library, namespace, undefined){
