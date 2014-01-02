@@ -1,19 +1,13 @@
 $(function(){
+    $("header>h1").shellView()
+                  .delay(500)
+                  .type("demmy.jp", 200)
+                  .delay(5000)
+                  .stopBlink(false);
+
     var $hakoniwa = $("#hakoniwa");
-    window.controller = $hakoniwa.initShellView();
-
-    /*
-    var $legacy = $('#legacy');
-    $legacy.typist({
-        height: $legacy.height(),
-        width: $legacy.width(),
-        backgroundColor: '#fff',
-        textColor: '#444',
-        fontFamily: '"Droid Sans Mono", sans-serif;'
-    }).typist('prompt');
-
-    demmy.code.random($legacy);
-    */
+    $hakoniwa.shellView();
+    demmy.code.random($hakoniwa);
 });
 
 (function(window, library, namespace, undefined){
@@ -58,9 +52,9 @@ $(function(){
 
     ns.java = codes.push({
         before: function($shell){
-            $shell.typist('wait', 500)
-                  .typist('type', 'mkdir -p jp/demmy')
-                  .typist('prompt');
+            $shell.delay(500)
+                  .type('mkdir -p jp/demmy')
+                  .prompt();
         },
         file: 'jp/demmy/Hello.java',
         source: [
@@ -81,32 +75,35 @@ $(function(){
         if(typeof(code.before) == "function"){
             code.before($shell);
         }
-        $shell.typist('wait', 500)
-              .typist('type', 'ed -p @')
-              .typist('wait', 1000)
-              .typist('prompt', '@')
-              .typist('wait', 500)
-              .typist('type', 'i')
-              .typist('wait', 500);
+        $shell.delay(500)
+              .type('ed -p @')
+              .newLine()
+              .delay(1000)
+              .print('@')
+              .delay(500)
+              .print('i')
+              .newLine()
+              .delay(500)
         for(var i = 0; i < code.source.length; i++){
-            $shell.typist('echo', code.source[i]);
+            $shell.type(code.source[i]).newLine();
         }
-        $shell.typist('echo', '.')
-              .typist('prompt', '@')
-              .typist('wait', 500)
-              .typist('type', 'wq ' + code.file)
-              .typist('echo', String(ns.length(code.source)))
-              .typist('prompt');
+        $shell.type('.')
+              .newLine()
+              .print('@')
+              .delay(500)
+              .type('wq ' + code.file)
+              .echo(String(ns.length(code.source)))
+              .prompt();
         if(typeof(code.compile) != "undefined"){
-            $shell.typist('wait', 500)
-                  .typist('type', code.compile)
-                  .typist('wait', 500)
-                  .typist('prompt');
+            $shell.delay(500)
+                  .type(code.compile)
+                  .delay(500)
+                  .prompt()
         }
-        $shell.typist('wait', 500)
-              .typist('type', code.run)
-              .typist('show', code.result)
-              .typist('prompt');
+        $shell.delay(500)
+              .type(code.run)
+              .echo(code.result)
+              .prompt();
     };
 
     ns.random = function($shell){
