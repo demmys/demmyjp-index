@@ -1,23 +1,45 @@
-html, body, .terminal{
+html, body{
     width: 100%;
     height: 100%;
 }
-.terminal{
-    display: table;
-}
-.terminal>div{
-    display: table-cell;
-    height: 100%;
+header{
     width: 100%;
-    vertical-align: middle;
 }
-#shell{
-    width: 330px;
-    height: 330px;
+header>h1{
+    font-family: "Helvetica Neue", sans-serif;
+    width: 860px;
     margin: 0 auto;
     padding: 20px;
-    border-radius: 10px;
-    font-size: 12pt;
     color: #333;
-    border-radius: 10px;
+}
+body>div{
+    display: table;
+    width: 860px;
+    margin: 0 auto;
+    padding: 20px;
+}
+body>div>div{
+    display: table-cell;
+}
+
+div.main-contents{
+    width: 600px;
+}
+
+div.sub-contents{
+    width: 300px;
+    height: 600px;
+    padding: 10px;
+}
+
+div.sub-contents>*{
+    border-radius: 4px;
+    border: 1px solid #444;
+}
+
+#legacy{
+    height: 480px;
+    padding: 10px;
+    font-size: 7pt;
+    color: #333;
 }
