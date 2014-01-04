@@ -21,17 +21,36 @@ $(function(){
      * Hakoniwa
      */
     var $hakoniwa = $('#hakoniwa');
-    $hakoniwa.shellView();
-    $hakoniwa.click(function(e){
-        $(e.target).addClass('active');
+    var activateShell = function(e){
+        $hakoniwa.addClass('active');
         e.stopPropagation();
-    });
+    };
+    $hakoniwa.shellView();
+    $hakoniwa.click(activateShell);
+    $hakoniwa.children().click(activateShell);
     $(window).click(function(){
         $hakoniwa.removeClass('active');
     });
     demmyjp.auto($hakoniwa, function($shell){
         return !$shell.hasClass('active');
     });
+
+    /*
+     * Keyboard
+     */
+    var $key = $('.key.alphabet');
+    var typeKey = function(e){
+        if($hakoniwa.hasClass('active')){
+            var $target = $(e.target);
+            if(typeof($target.attr('data-shell-view-key')) == 'undefined'){
+                $target = $target.parent();
+            }
+            demmyjp.input($hakoniwa, $target.attr('data-shell-view-key'));
+            e.stopPropagation();
+        }
+    };
+    $key.click(typeKey);
+    $key.children().click(typeKey);
 });
 
 (function(window, namespace, undefined){
@@ -137,10 +156,16 @@ $(function(){
               .interrupt(ns.handover);
     };
 
+    var inputted = '';
     ns.auto = function($shell, condition){
         var r;
         var show = function(){
             r = Math.floor(Math.random() * codes.length);
+            if(inputted){
+                $shell.echo(inputted + ': command not found')
+                      .prompt();
+                inputted = '';
+            }
             ns.run($shell, codes[r]);
         };
         window.setInterval(function(){
@@ -177,6 +202,11 @@ $(function(){
                   .type('Q')
                   .prompt();
         });
+    };
+
+    ns.input = function($shell, command){
+        $shell.print(command);
+        inputted += command;
     };
 
 }(this, 'demmyjp'));
