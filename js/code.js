@@ -51,9 +51,11 @@ $(function(){
             e.stopPropagation();
         }
     };
-    $key.click(typeKey);
+    if(!('ontouchstart' in window)){
+        $key.click(typeKey);
+        $key.children().click(typeKey);
+    }
     $key.bind('touchstart', typeKey);
-    $key.children().click(typeKey);
     $key.children().bind('touchstart', typeKey);
 });
 
