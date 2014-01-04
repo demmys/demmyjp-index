@@ -52,7 +52,9 @@ $(function(){
         }
     };
     $key.click(typeKey);
+    $key.bind('touchstart', typeKey);
     $key.children().click(typeKey);
+    $key.children().bind('touchstart', typeKey);
 });
 
 (function(window, namespace, undefined){
