@@ -2,40 +2,44 @@ $(function(){
     /*
      * Toggler
      */
-    $(".circle-toggler").click(function(e){
+    $('.circle-toggler').click(function(e){
         $target = $(e.target);
-        $target.toggleClass("active");
-        $target.parent().parent().children("ul.togglee-list").toggleClass("active");
+        $target.toggleClass('active');
+        $target.parent().parent().children('ul.togglee-list').toggleClass('active');
     });
 
     /*
      * Header
      */
-    $("header>h1").shellView()
+    $('header>h1').shellView()
                   .delay(500)
-                  .type("demmy.jp", 200)
+                  .type('demmy.jp', 200)
                   .delay(5000)
                   .stopBlink(false);
 
     /*
      * Hakoniwa
      */
-    var $hakoniwa = $("#hakoniwa");
+    var $hakoniwa = $('#hakoniwa');
     $hakoniwa.shellView();
-    demmy.code.random($hakoniwa);
+    $hakoniwa.click(function(e){
+        $(e.target).addClass('active');
+        e.stopPropagation();
+    });
+    $(window).click(function(){
+        $hakoniwa.removeClass('active');
+    });
+    demmyjp.auto($hakoniwa, function($shell){
+        return !$shell.hasClass('active');
+    });
 });
 
-(function(window, library, namespace, undefined){
+(function(window, namespace, undefined){
 'use strict'
-    var lib = window[library];
-    if(!lib){
-        lib = {};
-        window[library] = lib;
-    }
-    var ns = lib[namespace];
+    var ns = window[namespace];
     if(!ns){
         ns = {};
-        lib[namespace] = ns;
+        window[namespace] = ns;
     }
 
     ns.length = function(source){
@@ -68,8 +72,10 @@ $(function(){
     ns.java = codes.push({
         before: function($shell){
             $shell.delay(500)
+                  .interrupt(ns.handover)
                   .type('mkdir -p jp/demmy')
-                  .prompt();
+                  .prompt()
+                  .interrupt(ns.handover);
         },
         file: 'jp/demmy/Hello.java',
         source: [
@@ -87,41 +93,51 @@ $(function(){
     });
 
     ns.run = function($shell, code){
-        if(typeof(code.before) == "function"){
+        if(typeof(code.before) == 'function'){
             code.before($shell);
         }
         $shell.delay(500)
+              .interrupt(ns.handover)
               .type('ed -p @')
-              .newLine()
-              .delay(1000)
-              .print('@')
+              .prompt('@')
+              .interrupt(ns.handoverFromEd)
               .delay(500)
+              .interrupt(ns.handoverFromEd)
               .print('i')
               .newLine()
+              .interrupt(ns.handoverFromEdEditing)
               .delay(500)
+              .interrupt(ns.handoverFromEdEditing);
         for(var i = 0; i < code.source.length; i++){
-            $shell.type(code.source[i]).newLine();
+            $shell.type(code.source[i]).newLine()
+                  .interrupt(ns.handoverFromEdEditing);
         }
         $shell.type('.')
-              .newLine()
-              .print('@')
+              .prompt()
+              .interrupt(ns.handoverFromEd)
               .delay(500)
+              .interrupt(ns.handoverFromEd)
               .type('wq ' + code.file)
               .echo(String(ns.length(code.source)))
-              .prompt();
-        if(typeof(code.compile) != "undefined"){
+              .prompt($shell.defaultPrompt())
+              .interrupt(ns.handover);
+        if(typeof(code.compile) != 'undefined'){
             $shell.delay(500)
+                  .interrupt(ns.handover)
                   .type(code.compile)
                   .delay(500)
                   .prompt()
+                  .interrupt(ns.handover);
         }
         $shell.delay(500)
+              .interrupt(ns.handover)
               .type(code.run)
               .echo(code.result)
-              .prompt();
+              .prompt()
+              .interrupt(ns.handover);
     };
 
-    ns.random = function($shell){
+    ns.auto = function($shell, condition){
         var r;
         var show = function(){
             r = Math.floor(Math.random() * codes.length);
@@ -129,10 +145,38 @@ $(function(){
         };
         window.setInterval(function(){
             var queue = $shell.queue();
-            if(typeof(queue) != "undefined" && queue.length == 0){
+            if(typeof(condition) == 'function' && !condition($shell)){
+                return;
+            }
+            if(typeof(queue) != 'undefined' && queue.length == 0){
                 show();
             }
         }, 2000);
     };
 
-}(this, 'demmy', 'code'));
+    ns.handover = function($shell, callback){
+        if($shell.hasClass('active')){
+            $shell.clearQueue();
+            if(typeof(callback) == 'function'){
+                callback();
+            }
+        }
+    };
+    ns.handoverFromEd = function($shell){
+        ns.handover($shell, function(){
+            $shell.type('Q')
+                  .prompt();
+        });
+    };
+    ns.handoverFromEdEditing = function($shell){
+        ns.handover($shell, function(){
+            $shell.type('.')
+                  .newLine()
+                  .print('@')
+                  .delay(500)
+                  .type('Q')
+                  .prompt();
+        });
+    };
+
+}(this, 'demmyjp'));

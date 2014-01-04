@@ -18,7 +18,8 @@ header{
 }
 header>h1{
     font-family: "Droid Sans Mono", sans-serif;
-    width: 860px;
+    width: 200px;/*860px;*/
+    font-size: 22pt;
     margin: 0 auto;
     padding: 20px;
     color: #333;
@@ -29,7 +30,7 @@ header>h1{
  */
 body>div{
     display: table;
-    width: 860px;
+    width: 200px;/*860px;*/
     margin: 0 auto;
     padding: 20px;
 }
@@ -45,16 +46,17 @@ div.main-contents{
 }
 i.circle-toggler{
     display: inline-block;
+    cursor: pointer;
     border: 1px solid #aaa;
     width: 30px;
     height: 30px;
     border-radius: 15px;
     position: relative;
-    -webkit-transition: -webkit-transform 0.5s ease 0;
-    -moz-transition: -moz-transform 0.5s ease 0;
-    -ms-transition: -ms-transform 0.5s ease 0;
-    -o-transition: -o-transform 0.5s ease 0;
-    transition: transform 0.5s ease 0;
+    -webkit-transition: -webkit-transform 0.3s ease 0;
+    -moz-transition: -moz-transform 0.3s ease 0;
+    -ms-transition: -ms-transform 0.3s ease 0;
+    -o-transition: -o-transform 0.3s ease 0;
+    transition: transform 0.3s ease 0;
 }
 i.circle-toggler:before{
     content: "";
@@ -76,11 +78,6 @@ i.circle-toggler.active{
 }
 ul.togglee-list{
     display: none;
-    -webkit-transition: display 0.5s ease 0;
-    -moz-transition: display 0.5s ease 0;
-    -ms-transition: display 0.5s ease 0;
-    -o-transition: display 0.5s ease 0;
-    transition: display 0.5s ease 0;
 }
 ul.togglee-list.active{
     display: block;
@@ -112,17 +109,85 @@ div.sub-contents{
     padding: 10px;
 }
 div.sub-contents>*{
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 #hakoniwa{
-    border-radius: 4px;
-    border: 1px solid #444;
-    padding: 20px;
+    display: block;
+    box-shadow: 0 0 0 15px #555, 0 0 0 18px #bdc3c7;
+    margin: 18px;
+    border-radius: 2px;
+    padding: 5px;
     font-family: "Droid Sans Mono", sans-serif;
     color: #333;
     font-size: 7pt;
     word-wrap: break-word;
-    width: 160px;
-    height: 300px;
+    width: 200px;
+    height: 125px;
     overflow: scroll;
+}
+#hakoniwa+label{
+    position: relative;
+    font-size: 7pt;
+    color: #ecf0f1;
+    top: -24px;
+    left: 102px;
+}
+.key{
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    margin: 4px 5px 5px 4px;
+    border-radius: 2px;
+    background-color: #eee;
+    text-align: left;
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 1px 0 1px #fff inset, 1px 1px 0 4px #d4d4dd, 1px 1px 0 5px #888;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    background-position: center center;
+    vertical-align: middle;
+}
+.key:hover{
+    background-color: #e4e4e4;
+    box-shadow: 0 1px 1px 2px #cacad3 inset, 0 2px 0 3px #f5f5f5 inset, 1px 1px 0 2px #cacad3, 1px 1px 0 4px #bababa, 1px 1px 0 5px #888;
+    background-size: 15px 15px;
+}
+.key.button{
+    cursor: pointer;
+}
+.key.button *{
+    cursor: pointer;
+}
+.key.github{
+    background-image: url("../img/github.png");
+}
+.key.twitter{
+    background-image: url("../img/twitter.png");
+}
+.key.hatena-blog{
+    background-image: url("../img/hatena-blog.png");
+}
+.key>label{
+    text-decoration: none;
+    font-size: 7pt;
+    position: absolute;
+    top: 17px;
+    left: 3px;
+    color: #777;
+}
+.key:hover>label{
+    font-size: 6pt;
+    left: 6px;
+}
+.key>p{
+    font-size: 10pt;
+    position: absolute;
+    top: 7px;
+    left: 8px;
+    color: #777;
+}
+.key:hover>p{
+    font-size: 9pt;
+    top: 8px;
 }
