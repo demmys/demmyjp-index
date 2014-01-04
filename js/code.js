@@ -29,10 +29,15 @@ $(function(){
         $hakoniwa.removeClass('active');
     };
     $hakoniwa.shellView();
-    $hakoniwa.click(activateShell);
-    $hakoniwa.children().click(activateShell);
-    $(window).click(deactivateShell);
-    $(window).bind('touchstart', deactivateShell);
+    if('ontouchstart' in window){
+        $hakoniwa.bind('touchstart', activateShell);
+        $hakoniwa.children().bind('touchstart', activateShell);
+        $(window).bind('touchstart', deactivateShell);
+    } else{
+        $hakoniwa.click(activateShell);
+        $hakoniwa.children().click(activateShell);
+        $(window).click(deactivateShell);
+    }
     demmyjp.auto($hakoniwa, function($shell){
         return !$shell.hasClass('active');
     });
@@ -51,12 +56,13 @@ $(function(){
             e.stopPropagation();
         }
     };
-    if(!('ontouchstart' in window)){
+    if('ontouchstart' in window){
+        $key.bind('touchstart', typeKey);
+        $key.children().bind('touchstart', typeKey);
+    } else{
         $key.click(typeKey);
         $key.children().click(typeKey);
     }
-    $key.bind('touchstart', typeKey);
-    $key.children().bind('touchstart', typeKey);
 });
 
 (function(window, namespace, undefined){
