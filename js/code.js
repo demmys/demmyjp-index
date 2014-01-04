@@ -25,12 +25,14 @@ $(function(){
         $hakoniwa.addClass('active');
         e.stopPropagation();
     };
+    var deactivateShell = function(){
+        $hakoniwa.removeClass('active');
+    };
     $hakoniwa.shellView();
     $hakoniwa.click(activateShell);
     $hakoniwa.children().click(activateShell);
-    $(window).click(function(){
-        $hakoniwa.removeClass('active');
-    });
+    $(window).click(deactivateShell);
+    $(window).bind('touchstart', deactivateShell);
     demmyjp.auto($hakoniwa, function($shell){
         return !$shell.hasClass('active');
     });
