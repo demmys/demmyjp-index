@@ -47,14 +47,13 @@ $(function(){
      */
     var $key = $('.key.alphabet');
     var typeKey = function(e){
-        if($hakoniwa.hasClass('active')){
-            var $target = $(e.target);
-            if(typeof($target.attr('data-shell-view-key')) == 'undefined'){
-                $target = $target.parent();
-            }
-            demmyjp.input($hakoniwa, $target.attr('data-shell-view-key'));
-            e.stopPropagation();
+        $hakoniwa.addClass('active');
+        var $target = $(e.target);
+        if(typeof($target.attr('data-shell-view-key')) == 'undefined'){
+            $target = $target.parent();
         }
+        demmyjp.input($hakoniwa, $target.attr('data-shell-view-key'));
+        e.stopPropagation();
     };
     if('ontouchstart' in window){
         $key.bind('touchstart', typeKey);
@@ -216,9 +215,18 @@ $(function(){
         });
     };
 
+    var inputQueue = '';
     ns.input = function($shell, command){
-        $shell.print(command);
-        inputted += command;
+        inputQueue += command;
+        var timer = window.setInterval(function(){
+            var queue = $shell.queue();
+            if(typeof(queue) != 'undefined' && queue.length == 0){
+                window.clearInterval(timer);
+                $shell.print(inputQueue);
+                inputted += inputQueue;
+                inputQueue = '';
+            }
+        }, 500);
     };
 
 }(this, 'demmyjp'));
