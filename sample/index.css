@@ -1,0 +1,23 @@
+html{
+    height: 100%;
+    width: 100%;
+}
+body{
+    height: inherit;
+    width: inherit;
+    margin: 0;
+}
+p{
+    text-align: center;
+}
+div{
+    position: relative;
+    border: 1px solid #ccc;
+    margin: 30px auto;
+}
+img.ball{
+    position: absolute;
+    width: 30px;
+    height: auto;
+    -webkit-user-select: none;
+}
