@@ -1,3 +1,8 @@
+body{
+    width: 320px;
+    margin: 0 auto;
+}
+
 /*
  * Header
  */
@@ -79,13 +84,13 @@ body>div,nav{
     cursor: pointer;
 }
 .key.github{
-    background-image: url("../img/github.png");
+    background-image: url("/img/github.png");
 }
 .key.twitter{
-    background-image: url("../img/twitter.png");
+    background-image: url("/img/twitter.png");
 }
 .key.hatena-blog{
-    background-image: url("../img/hatena-blog.png");
+    background-image: url("/img/hatena-blog.png");
 }
 .key>label{
     text-decoration: none;
