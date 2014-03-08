@@ -1,14 +1,5 @@
 $(function(){
     /*
-     * Toggler
-     */
-    $('.circle-toggler').click(function(e){
-        $target = $(e.target);
-        $target.toggleClass('active');
-        $target.parent().parent().children('ul.togglee-list').toggleClass('active');
-    });
-
-    /*
      * Header
      */
     $('header>h1').shellView()
@@ -20,7 +11,7 @@ $(function(){
     /*
      * Hakoniwa
      */
-    var $hakoniwa = $('#hakoniwa');
+    var $hakoniwa = $('#hakoniwa>pre');
     var activateShell = function(e){
         $hakoniwa.addClass('active');
         e.stopPropagation();
