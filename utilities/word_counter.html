@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="WordCount">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="keywords" content="文字数,カウンター,カウント,制限" />
+        <meta name="description" content="文字数カウンターです。文字数制限のある文章やメール文を書くときにご活用下さい。" />
+        <meta name="copyright" content="出水 厚輝" />
+        <title>Word Counter | demmy.jp</title>
+
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono">
+        <link rel="stylesheet" type="text/css" href="/css/common.css" />
+        <link rel="stylesheet" type="text/css" href="/css/utilities.css" />
+        <link rel="stylesheet" type="text/css" href="/css/word_counter.css" />
+        <script type="text/javascript" src="/js/analytics.js"></script>
+        <script type="text/javascript" src="/lib/jquery/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="/lib/angularjs/angular.min.js"></script>
+        <script type="text/javascript" src="/js/preset_url.js"></script>
+        <script type="text/javascript" src="/js/word_count.js"></script>
+        <!--[if lt IE 9]>
+            <script src="/lib/ie/html5shiv.js"></script>
+        <![endif]-->
+        <!--[if (gte IE 6)&(lte IE 8)]>
+            <script src="/lib/ie/selectivizr-min.js></script>
+        <![endif]-->
+    </head>
+    <body>
+        <header>
+            <h1>文字数カウンター</h1>
+            <ul class="bread-crumb">
+                <li><a href="/">ホーム</a></li>
+                <li>文字数カウンター</li>
+            </ul>
+        </header>
+
+        <div ng-controller="InputController">
+
+            <div class="count">
+                <span ng-show="characters" ng-class="{'limit':cLimit}">
+                    {{
+                        text
+                        | string
+                        | includes:linefeed:space
+                        | count
+                        | limit:charactersLimit:this:'cLimit'
+                    }} 文字
+                </span>
+                <span ng-show="characters && (words || lines)">,</span>
+                <span ng-show="words" ng-class="{'limit':wLimit}">
+                    {{
+                        text
+                        | string
+                        | split:'[ \n]+'
+                        | count
+                        | limit:wordsLimit:this:'wLimit'
+                    }} 単語
+                </span>
+                <span ng-show="words && lines">,</span>
+                <span ng-show="lines">
+                    {{ text | string | split:'\n' | count }} 行
+                </span>
+            </div>
+
+            <textarea ng-model="text" placeholder="ここに文字を入力したり貼り付けたりするとカウントされます。" ></textarea>
+
+            <h2>表示する数</h2>
+            <ul>
+                <li>
+                    <input type="checkbox" ng-model="characters" />
+                    <label>文字数</label>
+                </li>
+                <li>
+                    <input type="checkbox" ng-model="words" />
+                    <label>単語数(英語のみ)</label>
+                </li>
+                <li>
+                    <input type="checkbox" ng-model="lines" />
+                    <label>行数</label>
+                </li>
+            </ul>
+
+            <h2>カウントに含める文字</h2>
+            <ul>
+                <li>
+                    <input type="checkbox" ng-model="linefeed" />
+                    <label>改行</label>
+                </li>
+                <li>
+                    <input type="checkbox" ng-model="space" />
+                    <label>スペース</label>
+                </li>
+            </ul>
+
+            <h2>制限を設ける</h2>
+            <ul>
+                <li>
+                    <label>文字数</label>
+                    <input type="number" ng-model="charactersLimit" />
+                </li>
+                <li>
+                    <label>単語数(英語のみ)</label>
+                    <input type="number" ng-model="wordsLimit" />
+                </li>
+            </ul>
+
+            <h2>現在の設定を反映したURL</h2>
+            <div>
+                <p>下のURLをブックマークしておくと、現在と同じ設定で文字数カウンターを起動できます。</p>
+                <input class="preset-url" type="text" ng-model="presetUrl" select-on-click readonly />
+            </div>
+        </div>
+    </body>
+</html>

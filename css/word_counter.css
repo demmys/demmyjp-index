@@ -1,0 +1,58 @@
+body>div{
+    width: 70%;
+    margin: 30px auto;
+}
+p,label{
+    font-size: 11pt;
+}
+
+div.count{
+    font-size: 12pt;
+    margin: 50px 0 20px 0;
+}
+div.count>span.limit{
+    color: #e74c3c;
+}
+
+textarea{
+    display: block;
+    font-size: 12pt;
+    width: 100%;
+    height: 200px;
+    padding: 7px;
+    border: 1px solid #95a5a6;
+    border-radius: 5px;
+    resize: none;
+}
+
+h2{
+    font-size: 10pt;
+    color: #fff;
+    background-color: #7f8c8d;
+    padding: 5px 10px;
+    margin: 50px 0 30px 20px;
+    border-radius: 5px;
+}
+
+input[type="number"]{
+    width: 50px;
+    padding: 5px;
+    margin-left: 7px;
+    border: 1px solid #95a5a6;
+    border-radius: 5px;
+}
+input[type="number"].ng-invalid{
+    border-color: #c0392b;
+    box-shadow: 0 0 5px #c0392b;
+}
+
+body>div>ul{
+    margin-left: 40px;
+}
+body>div>ul>li{
+    display: inline-block;
+    margin-right: 20px;
+}
+body>div>div{
+    margin-left: 40px;
+}
