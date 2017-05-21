@@ -139,8 +139,9 @@ $(function(){
               .delay(500)
               .interrupt(ns.handoverFromEd)
               .type('wq ' + code.file)
-              .echo(String(ns.length(code.source)))
-              .prompt($shell.defaultPrompt())
+              .newLine()
+              .print(String(ns.length(code.source)))
+              .prompt($shell.defaultPrompt)
               .interrupt(ns.handover);
         if(typeof(code.compile) != 'undefined'){
             $shell.delay(500)
@@ -153,7 +154,8 @@ $(function(){
         $shell.delay(500)
               .interrupt(ns.handover)
               .type(code.run)
-              .echo(code.result)
+              .newLine()
+              .print(code.result)
               .prompt()
               .interrupt(ns.handover);
     };
@@ -164,7 +166,8 @@ $(function(){
         var show = function(){
             r = Math.floor(Math.random() * codes.length);
             if(inputted){
-                $shell.echo(inputted + ': command not found')
+                $shell.newLine()
+                      .print(inputted + ': command not found')
                       .prompt();
                 inputted = '';
             }

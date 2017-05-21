@@ -1,6 +1,5 @@
 var m = angular.module('WordCount', ['PresetUrl']);
 
-
 m.filter('string', function(){
     return function(input){
         return input ? input : '';
@@ -41,8 +40,8 @@ m.filter('limit', function(){
     };
 });
 
-
 m.controller('InputController', function(watchPresetUrl, setPresetUrl, $scope){
+    $scope.characters = true;
 
     var stob = function(s){
         return s == 'true' ? true : false;
@@ -50,6 +49,7 @@ m.controller('InputController', function(watchPresetUrl, setPresetUrl, $scope){
     var ston = function(s){
         return Number(s);
     };
+
     var map = {
         cs: { name: 'characters', fromstring: stob },
         ws: { name: 'words', fromstring: stob },
@@ -61,5 +61,4 @@ m.controller('InputController', function(watchPresetUrl, setPresetUrl, $scope){
     };
     setPresetUrl($scope, map);
     watchPresetUrl($scope, map, 'presetUrl');
-
 }).$inject = ['watchPresetUrl', 'setPresetUrl', '$scope'];

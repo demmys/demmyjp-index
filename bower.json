@@ -1,0 +1,18 @@
+{
+  "name": "demmyjp-index",
+  "homepage": "https://github.com/demmys/demmyjp_index",
+  "authors": [
+    "Atsuki Demizu <demmys.atsuki@gmail.com>"
+  ],
+  "description": "main page of demmy.jp",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "bower_components"
+  ],
+  "dependencies": {
+    "jquery": "3.x.x",
+    "angular": "1.x.x",
+    "shell-viewjs": "1.x.x"
+  }
+}

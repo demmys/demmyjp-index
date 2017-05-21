@@ -42,8 +42,11 @@ body>div,nav{
     white-space: pre;
     word-wrap: break-word;
     width: 238px;
-    height: 130px;
+    height: 149px;
     overflow: scroll;
+}
+#hakoniwa>pre>span{
+    word-wrap: break-word;
 }
 #hakoniwa>div{
     width: 284px;
